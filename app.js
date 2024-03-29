@@ -3,6 +3,9 @@ const express = require('express');
 // Create an Express application
 const app = express();
 
+// Import Socket
+const { join } = require('node:path');
+
 // Ensures CORS errors are avoided
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,17 +16,17 @@ app.use((req, res, next) => {
 
 // Route for home page
 app.get('/home', (req, res, next) => {
-    res.json({ message: 'Votre requête a bien été reçue !' });
+    res.sendFile(join(__dirname, './views/index.html'));
 });
 
 // Route for discuss channel
 app.get('/channel', (req, res, next) => {
-    res.json({ message: 'Vous êtes dans le channel de discussion !' });
+    res.sendFile(join(__dirname, './views/channel.html'));
 });
 
 // Route POST to send messages
-app.post('/message', (req, res, next) => {
-    res.json({ message: 'Message envoyé !' });
+app.get('/message', (req, res, next) => {
+    res.sendFile(join(__dirname, './views/message.html'));
 });
 
 // export the application
