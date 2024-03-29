@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TheYassAnz/myirc#readme",
   "dependencies": {
+    "express": "^4.19.2",
     "nodejs": "^0.0.0"
   }
 }
