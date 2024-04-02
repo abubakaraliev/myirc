@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `channels` (
     `identifier` VARCHAR(45) NOT NULL,
     `creation_date` DATETIME NOT NULL,
+    `type` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`identifier`)
 );
 
