@@ -13,7 +13,7 @@ export const registerUser = (req:any, res:any) => {
         return res.status(400).json("Password should be at least 12 characters long and include at least one lowercase letter, one uppercase letter, one digit, and one special character");
     }
 
-    const checkUserExists = "SELECT * FROM users WHERE email = ?";
+    const checkUserExists = "SELECT * FROM Users WHERE email = ?";
     try {
         db.query(checkUserExists, req.body.email, (error:any, data:any) => {
             if (error) throw error;
@@ -25,7 +25,7 @@ export const registerUser = (req:any, res:any) => {
             const salt = bcrypt.genSaltSync(saltRounds);
             const hash = bcrypt.hashSync(password, salt);
 
-            const createUser = "INSERT INTO users(`username`, `email`, `password`) VALUES (?, ?, ?)";
+            const createUser = "INSERT INTO Users(`username`, `email`, `password`) VALUES (?, ?, ?)";
             const values = [req.body.username, req.body.email, hash];
 
             db.query(createUser, values, (error:any, data:any) => {
@@ -39,30 +39,23 @@ export const registerUser = (req:any, res:any) => {
 };
 
 export const updateUser = (req:any, res:any) => {
-    const token = req.cookies.access_token;
-    if (!token) return res.status(401).json("Not authenticated!");
-
-    jwt.verify(token, "SecKey", (err:any, userInfo:any) => {
-        if (err) return res.status(403).json("Token is not valid!");
-
-        const { userId, username, email, password } = req.body;
-        if (userId !== userInfo) return res.status(403).json("Not authorized!");
+        const { id, username, email, password } = req.body;
 
         try {
             if (password) {
                 bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
                     if (hashErr) throw hashErr;
-                    const updateUserQuery = 'UPDATE users SET `username`= ?, `email`= ?, `password`= ? WHERE `id`= ?';
+                    const updateUserQuery = 'UPDATE Users SET `username`= ?, `email`= ?, `password`= ?';
 
-                    db.query(updateUserQuery, [username, email, hashedPassword, userInfo.id], (err:any, data:any) => {
+                    db.query(updateUserQuery, [username, email, hashedPassword], (err:any, data:any) => {
                         if (err) throw err;
                         return res.status(200).json("User information has been updated.");
                     });
                 });
             } else {
-                const updateUserQuery = 'UPDATE users SET `username`= ?, `email`= ? WHERE `id`= ?';
+                const updateUserQuery = 'UPDATE Users SET `username`= ?, `email`= ? WHERE `id`= ?';
 
-                db.query(updateUserQuery, [username, email, userInfo.id], (err:any, data:any) => {
+                db.query(updateUserQuery, [username, email, id], (err:any, data:any) => {
                     if (err) throw err;
                     return res.status(200).json("User information has been updated.");
                 });
@@ -70,26 +63,76 @@ export const updateUser = (req:any, res:any) => {
         } catch (error) {
             return res.status(500).json(error);
         }
-    });
 };
 
 export const deleteUser = (req:any, res:any) => {
-    const token = req.cookies.access_token;
 
-    if (!token) return res.status(401).json("Not authenticated!");
+    const deleteUserQuery = 'DELETE FROM Users WHERE `id`= ?';
+    const id = req.params.userId;
+    console.log(id);
 
-    jwt.verify(token, "SecKey", (err:any, userInfo:any) => {
-        if (err) return res.status(403).json("Token is not valid!");
-
-        const deleteUserQuery = 'DELETE FROM users WHERE `id`= ?';
-
-        try {
-            db.query(deleteUserQuery, [userInfo.id], (err:any, data:any) => {
-                if (err) throw err;
-                return res.status(200).json("User has been deleted.");
-            });
-        } catch (error) {
-            return res.status(500).json(error);
-        }
-    });
+    try {
+        db.query(deleteUserQuery, [id], (err:any, data:any) => {
+            if (err) throw err;
+            return res.status(200).json("User has been deleted.");
+        });
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 };
+
+// export const deleteUser = (req:any, res:any) => {
+//     const token = req.cookies.access_token;
+
+//     if (!token) return res.status(401).json("Not authenticated!");
+
+//     jwt.verify(token, "SecKey", (err:any, userInfo:any) => {
+//         if (err) return res.status(403).json("Token is not valid!");
+
+//         const deleteUserQuery = 'DELETE FROM Users WHERE `id`= ?';
+
+//         try {
+//             db.query(deleteUserQuery, [userInfo.id], (err:any, data:any) => {
+//                 if (err) throw err;
+//                 return res.status(200).json("User has been deleted.");
+//             });
+//         } catch (error) {
+//             return res.status(500).json(error);
+//         }
+//     });
+// };
+
+// export const updateUser = (req:any, res:any) => {
+//     const token = req.cookies.access_token;
+//     if (!token) return res.status(401).json("Not authenticated!");
+
+//     jwt.verify(token, "SecKey", (err:any, data:any) => {
+//         if (err) return res.status(403).json("Token is not valid!");
+
+//         const { id, username, email, password } = req.body;
+//         if (id !== data) return res.status(403).json("Not authorized!");
+
+//         try {
+//             if (password) {
+//                 bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
+//                     if (hashErr) throw hashErr;
+//                     const updateUserQuery = 'UPDATE Users SET `username`= ?, `email`= ?, `password`= ? WHERE `id`= ?';
+
+//                     db.query(updateUserQuery, [username, email, hashedPassword, data.id], (err:any, data:any) => {
+//                         if (err) throw err;
+//                         return res.status(200).json("User information has been updated.");
+//                     });
+//                 });
+//             } else {
+//                 const updateUserQuery = 'UPDATE Users SET `username`= ?, `email`= ? WHERE `id`= ?';
+
+//                 db.query(updateUserQuery, [username, email, data.id], (err:any, data:any) => {
+//                     if (err) throw err;
+//                     return res.status(200).json("User information has been updated.");
+//                 });
+//             }
+//         } catch (error) {
+//             return res.status(500).json(error);
+//         }
+//     });
+// };
