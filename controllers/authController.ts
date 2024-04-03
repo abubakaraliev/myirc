@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { db } from "../db";
 
 export const login = (req:any, res:any) => {
-    const checkUserQuery = "SELECT * FROM users WHERE username = ?";
+    const checkUserQuery = "SELECT * FROM Users WHERE username = ?";
 
     try {
         db.query(checkUserQuery, [req.body.username], (err:any, data:any) => {
