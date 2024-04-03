@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Massage Page</title>
+    <title>Exemple de Routage</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/your-client-script.js"></script>
+    
 </head>
-
 <body>
-    <h2>Welcome to the messages page 📧</h2>
+    <h1>Envoyer un Message</h1>
+    <form id="message-form" action="/sendMessage" method="post">
+        <label for="message">Message :</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Envoyer</button>
+    </form>
+    <h2>Messages</h2>
+    <ul id="message-list">
+        <!-- Les messages seront ajoutés ici dynamiquement -->
+    </ul>
 </body>
-
 </html>
