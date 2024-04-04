@@ -6,10 +6,12 @@ import {
     deleteUser
 } from "../controllers/user";
 
+import { auth } from "../middleware/auth";
+
 const router = express.Router();
 
-router.post("/", registerUser);
-router.put("/:userId", updateUser);
-router.delete("/:userId", deleteUser);
+router.post("/", auth, registerUser);
+router.put("/:userId", auth, updateUser);
+router.delete("/:userId", auth, deleteUser);
 
 export default router;
