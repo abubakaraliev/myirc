@@ -27,9 +27,15 @@ app.use(body_parser.urlencoded({ extended: false }));
 // parse application/json
 app.use(body_parser.json());
 
+app.use("/", express.static(__dirname + "/public"));
+
 // Create a simple server
 const server = createServer(app);
 const io = new Server(server);
+
+io.on('connection', function(socket:any){
+  console.log('a user connected');
+});
 
 // Ensures CORS errors are avoided
 app.use(cors({
@@ -39,21 +45,20 @@ app.use(cors({
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 
-// // Route GET for homepage
-// app.get("/home", (req, res, next) => {
-//   res.sendFile(join(__dirname, "./views/index.html"));
-// });
+// Route GET for homepage
+app.get("/home", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/index.html"));
+});
 
-// // Route GET for discuss channel
-// app.get("/channel", (req, res, next) => {
-//   res.sendFile(join(__dirname, "./views/channel.html"));
-// });
+// Route GET for discuss channel
+app.get("/channel", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/channel.html"));
+});
 
-// // Route GET to send messages
-// app.get("/message", (req, res, next) => {
-//   res.sendFile(join(__dirname, "./views/message.html"));
-// });
-
+// Route GET to send messages
+app.get("/message", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/message.html"));
+});
 
 // Start the server on port 3000
 const listener = server.listen(3000, () => {
