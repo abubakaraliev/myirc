@@ -28,7 +28,6 @@
     "mysql2": "^3.9.3",
     "nodejs": "^0.0.0",
     "nodemon": "^3.1.0",
-    "request": "^2.88.2",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
