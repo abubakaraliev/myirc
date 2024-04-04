@@ -2,17 +2,19 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { db } from "../db";
 
+// controller to add an user
 export const registerUser = (req:any, res:any) => {
+    // check if the email is valid
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(req.body.email)) {
         return res.status(400).json("Invalid email format");
     }
-
+    // check if the password is valid
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}$/;
     if (!passwordRegex.test(req.body.password)) {
         return res.status(400).json("Password should be at least 12 characters long and include at least one lowercase letter, one uppercase letter, one digit, and one special character");
     }
-
+    // check if the user already exists
     const checkUserExists = "SELECT * FROM Users WHERE email = ?";
     try {
         db.query(checkUserExists, req.body.email, (error:any, data:any) => {
