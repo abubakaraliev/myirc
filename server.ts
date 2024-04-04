@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth"
 import userRoutes from "./routes/user"
 
 const cors = require("cors");
+const cookieParser = require('cookie-parser')
 
 // import express
 const express = require("express");
@@ -20,6 +21,9 @@ const { Server } = require("socket.io");
 
 // Create an Express application
 const app = express();
+
+// cookieParser
+app.use(cookieParser())
 
 // parse application/x-www-form-urlencoded
 app.use(body_parser.urlencoded({ extended: false }));
