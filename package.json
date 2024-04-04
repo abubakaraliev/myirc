@@ -21,11 +21,14 @@
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-http-proxy": "^2.0.0",
+    "http-proxy": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.3",
     "nodejs": "^0.0.0",
     "nodemon": "^3.1.0",
+    "request": "^2.88.2",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
