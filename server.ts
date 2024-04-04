@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-import authRoutes from "./routes/authRoute"
-import userRoutes from "./routes/userRoute"
+import authRoutes from "./routes/auth"
+import userRoutes from "./routes/user"
 
 const cors = require("cors");
 
