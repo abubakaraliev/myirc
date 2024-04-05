@@ -1,9 +1,11 @@
 require('dotenv').config();
 
-import authRoutes from "./routes/authRoute"
-import userRoutes from "./routes/userRoute"
+import authRoutes from "./routes/auth"
+import userRoutes from "./routes/user"
 
 const cors = require("cors");
+
+const path = require("path");
 
 // import express
 const express = require("express");
@@ -21,6 +23,11 @@ const { Server } = require("socket.io");
 // Create an Express application
 const app = express();
 
+//setting view engine to ejs
+app.set("view engine", "ejs");
+
+app.use(express.json());
+
 // parse application/x-www-form-urlencoded
 app.use(body_parser.urlencoded({ extended: false }));
 
@@ -35,6 +42,9 @@ const io = new Server(server);
 
 io.on('connection', function(socket:any){
   console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 // Ensures CORS errors are avoided
@@ -46,7 +56,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 
 // Route GET for homepage
-app.get("/home", (req, res, next) => {
+app.get("/", (req, res, next) => {
   res.sendFile(join(__dirname, "./views/index.html"));
 });
 
@@ -55,10 +65,23 @@ app.get("/channel", (req, res, next) => {
   res.sendFile(join(__dirname, "./views/channel.html"));
 });
 
-// Route GET to send messages
 app.get("/message", (req, res, next) => {
   res.sendFile(join(__dirname, "./views/message.html"));
 });
+
+app.get("/chat", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/chat.html"));
+});
+
+app.get("/login", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/login.html"));
+});
+app.post('/login', authRoutes);
+
+app.get("/register", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/register.html"));
+});
+app.post('/register', userRoutes);
 
 // Start the server on port 3000
 const listener = server.listen(3000, () => {

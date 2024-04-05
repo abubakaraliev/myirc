@@ -4,11 +4,11 @@ import {
     registerUser,
     updateUser,
     deleteUser
-} from "../controllers/userController";
+} from "../controllers/user";
 
 const router = express.Router();
 
-router.post("/", registerUser);
+router.post("/register", registerUser);
 router.put("/:userId", updateUser);
 router.delete("/:userId", deleteUser);
 
