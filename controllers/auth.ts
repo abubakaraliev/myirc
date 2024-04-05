@@ -4,7 +4,6 @@ import { db } from "../db";
 
 export const login = (req:any, res:any) => {
     const checkUserQuery = "SELECT * FROM Users WHERE username = ?";
-
     try {
         db.query(checkUserQuery, [req.body.username], (err:any, data:any) => {
             if (err) throw err;
