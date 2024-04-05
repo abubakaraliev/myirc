@@ -41,6 +41,11 @@ io.on('connection', function(socket:any){
   console.log('a user connected');
 });
 
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
 app.use((req, res, next) => {
   // Set the headers to allow requests from any origin
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -64,8 +69,8 @@ app.get("/channel", (req, res, next) => {
 });
 
 // Route GET to send messages
-app.get("/message", (req, res, next) => {
-  res.sendFile(join(__dirname, "./views/message.html"));
+app.get("/chat", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/chat.html"));
 });
 
 // Start the server on port 3000
