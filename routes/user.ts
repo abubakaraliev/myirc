@@ -4,13 +4,13 @@ import {
     registerUser,
     updateUser,
     deleteUser
-} from "../controllers/user.ts";
+} from "../controllers/user";
 
 import { auth } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/", auth, registerUser);
+router.post("/register", registerUser);
 router.put("/:userId", auth, updateUser);
 router.delete("/:userId", auth, deleteUser);
 

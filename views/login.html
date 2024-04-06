@@ -56,24 +56,32 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    
+
     document.getElementById('loginForm').addEventListener('submit', async function (event) {
       event.preventDefault();
       const data = {
-      "username": document.getElementById("username").value,
-      "password": document.getElementById("password").value
-    }
-    console.log(data);
+        "username": document.getElementById("username").value,
+        "password": document.getElementById("password").value
+      }
+      // console.log(data);
       axios.post('/auth/login', data)
-      .then(function (response){
-        document.getElementById("alert-message").innerHTML = response.data.message;
-        console.log(response);
-      })
-      .catch(function (error){
-        document.getElementById("alert-message").innerHTML = "Incorrect username or password";
-        console.log(error);
-      })
+        .then(function (response) {
+          console.log(response.data.token);
+          localStorage.setItem('token', response.data.token);
+          axios.post('/auth/verify', {"token": response.data.token})
+          .then(function (response) {
+            window.location.href = '/chat';
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+          })
+        })
+        .catch(function (error) {
+          document.getElementById("alert-message").innerHTML = "Incorrect username or password";
+          console.log(error);
+        })
     });
   </script>
 </body>
+
 </html>
