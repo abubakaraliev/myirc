@@ -16,10 +16,11 @@ export const login = (req:any, res:any) => {
             const token = jwt.sign({ id: data[0].id }, 'RANDOM_TOKEN_SECRET', { expiresIn: '24h' });
             const { password, ...other } = data[0];
             // Send the token in a cookie
-            res.cookie("ACCESS_TOKEN", token, {
+            return res.cookie("ACCESS_TOKEN", token, {
                 httpOnly: true,
                 secure: true,
-            }).status(200).json({message: 'User is authenticated!'});
+            }).status(200).json({message: 'User is authenticated!', token:token});
+            // Return the token to the client
         });
     } catch (error) {
         return res.status(500).json(error);
@@ -36,3 +37,17 @@ export const logout = (req:any, res:any) => {
         return res.status(500).json(error);
     }
 };
+
+// Middleware to verify JWT token
+export const auth = (req:any, res:any) => {
+    try {
+        console.log(req.body.token)
+        // Find the JWT token in the request headers
+        const token = req.body.token;
+        // Decode the token
+        const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+        // Extract the user ID from the token
+        res.status(200).json({message: 'User is authenticated!', token:token});
+        // Extract the user ID from the token
+    } catch (error) { res.status(401).json({message: 'User must be connected'}); }
+}

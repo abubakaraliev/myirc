@@ -42,7 +42,6 @@ export const registerUser = (req:any, res:any) => {
     });
 };
 
-
 export const updateUser = (req:any, res:any) => {
         const { id, username, email, password } = req.body;
 

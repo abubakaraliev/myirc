@@ -4,7 +4,7 @@ import {
     registerUser,
     updateUser,
     deleteUser
-} from "../controllers/user.ts";
+} from "../controllers/user";
 
 import { auth } from "../middleware/auth";
 

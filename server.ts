@@ -3,10 +3,8 @@ require('dotenv').config();
 import authRoutes from "./routes/auth"
 import userRoutes from "./routes/user"
 
+// import cors
 const cors = require("cors");
-const cookieParser = require('cookie-parser')
-
-const path = require("path");
 
 // import express
 const express = require("express");
@@ -53,16 +51,12 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg);
   });
 });
-app.use((req, res, next) => {
-  // Set the headers to allow requests from any origin
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  // Set the headers to allow the following methods
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
-});
 
-app.use("/auth", authRoutes);
+app.use(cors({
+  origin: '*'
+}));
+
+app.use("/auth",authRoutes);
 app.use("/users", userRoutes);
 
 // Route GET for homepage
@@ -86,12 +80,11 @@ app.get("/chat", (req, res, next) => {
 app.get("/login", (req, res, next) => {
   res.sendFile(join(__dirname, "./views/login.html"));
 });
-app.post('/login', authRoutes);
 
 app.get("/register", (req, res, next) => {
   res.sendFile(join(__dirname, "./views/register.html"));
 });
-app.post('/register', userRoutes);
+
 
 // Start the server on port 3000
 const listener = server.listen(3000, () => {
