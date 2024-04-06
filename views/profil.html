@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta viewport="width=device-width, initial-scale=1.0">
+    <title>Profil Utilisateur</title>
+    <script src="static/js/photo.js"></script>
+    <link rel="stylesheet" href=".static/css/profil.css">
+</head>
+<body>
+    <div class="profil">
+        <header class="header">
+            <h1>Mon Profil</h1>
+        </header>
+        <div class="profile-card">
+            <div class="profil-bitmoji-wrapper" onclick="document.getElementById('profileImageInput').click();">
+                <img src="" alt="Avatar de l'utilisateur" class="profile-bitmoji">
+                <input type="file" id="profileImageInput" style="display: none;" onchange="previewImage();" accept="image/*">
+            </div>            
+            <div class="profile-info">
+                <h2>Nom d'Utilisateur</h2>
+                <p class="status">Statut : <span>En ligne</span></p>
+                <p>Email : utilisateur@example.com</p>
+            </div>
+            <div class="profile-settings">
+                <button class="btn">Configurer les notifications</button>
+                <button class="btn">Changer de thème</button>
+                <button class="btn">Changer le mot de passe</button>
+            </div>
+            <div class="logout-section">
+                <button class="btn btn-danger">Se Déconnecter</button>
+            </div>
+        </div>
+    </div>
+    <script src="public/static/js/photo.js"></script>
+</body>
+</body>
+</html>

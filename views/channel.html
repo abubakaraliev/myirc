@@ -1,32 +1,56 @@
+<!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
-    <title>Exemple de Routage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="static/js/channel.js"></script>
+    <title>Page Principale IRC</title>
+    <link rel="stylesheet" href="static/css/channel.css">
 </head>
-
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="btn btn-chat" href="/chat" role="button">Chat</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-channel" href="/channel" role="button">Channel</a>
-                    </li>
-                </ul>
-                <a href="/auth/logout"><button class="btn btn-outline-danger">Logout</button></a>
-            </div>
-        </nav>
+        <h1>Canaux Disponibles</h1>
     </header>
-    <h2>Canaux de Discussion</h2>
-    <ul>
-        <li><a href="#">Général</a></li>
-        <li><a href="#">Tech</a></li>
-        <li><a href="#">Sports</a></li>
-    </ul>
-</body>
+    <main>
+        <div id="channels-container">
+            <div id="channels-container">
+                <div class="channel-card">
+                    <img src="chat_logo_design-removebg-preview.png" alt="Image du canal Général">
+                    <div class="channel-card-content">
+                        <h3 class="channel-card-title">Général</h3>
+                        <p class="channel-card-info">Participants: 42</p>
+                    </div>
+                </div>
+                <div class="channel-card">
+                    <img src="https://via.placeholder.com/300x150.png?text=Développement" alt="Image du canal Développement">
+                    <div class="channel-card-content">
+                        <h3 class="channel-card-title">Développement</h3>
+                        <p class="channel-card-info">Participants: 35</p>
+                    </div>
+                </div>
+                <div class="channel-card">
+                    <img src="https://via.placeholder.com/300x150.png?text=Jeux" alt="Image du canal Jeux">
+                    <div class="channel-card-content">
+                        <h3 class="channel-card-title">Jeux</h3>
+                        <p class="channel-card-info">Participants: 27</p>
+                    </div>
+                </div>
+                <div class="channel-card">
+                    <img src="https://via.placeholder.com/300x150.png?text=Musique" alt="Image du canal Musique">
+                    <div class="channel-card-content">
+                        <h3 class="channel-card-title">Musique</h3>
+                        <p class="channel-card-info">Participants: 18</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    <script src="channels.js"></script>
+    <div class="container-button">
+    <button class="favorite styled"
+     type="button">Add to channel</button>
+     </div>
 
+</body>
 </html>
