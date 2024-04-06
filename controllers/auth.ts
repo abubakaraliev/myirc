@@ -17,8 +17,7 @@ export const login = (req:any, res:any) => {
             const { password, ...other } = data[0];
             // Send the token in a cookie
             return res.cookie("ACCESS_TOKEN", token, {
-                httpOnly: true,
-                secure: true,
+                httpOnly: true
             }).status(200).json({message: 'User is authenticated!', token:token});
             // Return the token to the client
         });
@@ -29,10 +28,7 @@ export const login = (req:any, res:any) => {
 
 export const logout = (req:any, res:any) => {
     try {
-        res.clearCookie("ACCESS_TOKEN", {
-            secure: true,
-            sameSite: "none",
-        }).status(200).json("User has been logged out.");
+        res.clearCookie("ACCESS_TOKEN").status(200).json("User has been logged out.");
     } catch (error) {
         return res.status(500).json(error);
     }
