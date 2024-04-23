@@ -84,6 +84,9 @@ app.get("/login", (req, res, next) => {
 app.get("/register", (req, res, next) => {
   res.sendFile(join(__dirname, "./views/register.html"));
 });
+app.get("/profil", (req, res, next) => {
+  res.sendFile(join(__dirname, "./views/profil.html"));
+});
 
 
 // Start the server on port 3000
